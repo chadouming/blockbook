@@ -1,4 +1,4 @@
-package ravencoin
+package raptoreum
 
 import (
 	"github.com/martinboehm/btcd/wire"
@@ -9,8 +9,8 @@ import (
 
 // magic numbers
 const (
-	MainnetMagic wire.BitcoinNet = 0x4e564152
-	TestnetMagic wire.BitcoinNet = 0x544e5652
+	MainnetMagic wire.BitcoinNet = 0x2e6d7472
+	TestnetMagic wire.BitcoinNet = 0x6d747274
 )
 
 // chain parameters
@@ -23,23 +23,23 @@ func init() {
 	MainNetParams = chaincfg.MainNetParams
 	MainNetParams.Net = MainnetMagic
 	MainNetParams.PubKeyHashAddrID = []byte{60}
-	MainNetParams.ScriptHashAddrID = []byte{122}
+	MainNetParams.ScriptHashAddrID = []byte{16}
 
 	TestNetParams = chaincfg.TestNet3Params
 	TestNetParams.Net = TestnetMagic
-	TestNetParams.PubKeyHashAddrID = []byte{111}
-	TestNetParams.ScriptHashAddrID = []byte{196}
+	TestNetParams.PubKeyHashAddrID = []byte{123}
+	TestNetParams.ScriptHashAddrID = []byte{19}
 }
 
-// RavencoinParser handle
-type RavencoinParser struct {
+// RaptoreumParser handle
+type RaptoreumParser struct {
 	*btc.BitcoinLikeParser
 	baseparser *bchain.BaseParser
 }
 
-// NewRavencoinParser returns new RavencoinParser instance
-func NewRavencoinParser(params *chaincfg.Params, c *btc.Configuration) *RavencoinParser {
-	return &RavencoinParser{
+// NewRaptoreumParser returns new RaptoreumParser instance
+func NewRaptoreumParser(params *chaincfg.Params, c *btc.Configuration) *RaptoreumParser {
+	return &RaptoreumParser{
 		BitcoinLikeParser: btc.NewBitcoinLikeParser(params, c),
 		baseparser:        &bchain.BaseParser{},
 	}
@@ -65,11 +65,11 @@ func GetChainParams(chain string) *chaincfg.Params {
 }
 
 // PackTx packs transaction to byte array using protobuf
-func (p *RavencoinParser) PackTx(tx *bchain.Tx, height uint32, blockTime int64) ([]byte, error) {
+func (p *RaptoreumParser) PackTx(tx *bchain.Tx, height uint32, blockTime int64) ([]byte, error) {
 	return p.baseparser.PackTx(tx, height, blockTime)
 }
 
 // UnpackTx unpacks transaction from protobuf byte array
-func (p *RavencoinParser) UnpackTx(buf []byte) (*bchain.Tx, uint32, error) {
+func (p *RaptoreumParser) UnpackTx(buf []byte) (*bchain.Tx, uint32, error) {
 	return p.baseparser.UnpackTx(buf)
 }

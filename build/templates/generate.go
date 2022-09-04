@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/trezor/blockbook/build/tools"
+	"github.com/chadouming/blockbook/build/tools"
 )
 
 const (

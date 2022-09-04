@@ -14,8 +14,8 @@ import (
 	"testing"
 
 	"github.com/martinboehm/btcutil/chaincfg"
-	"github.com/trezor/blockbook/bchain"
-	"github.com/trezor/blockbook/bchain/coins/btc"
+	"github.com/chadouming/blockbook/bchain"
+	"github.com/chadouming/blockbook/bchain/coins/btc"
 )
 
 type testBlock struct {

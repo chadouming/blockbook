@@ -20,12 +20,12 @@ import (
 	"github.com/martinboehm/btcutil/chaincfg"
 	gosocketio "github.com/martinboehm/golang-socketio"
 	"github.com/martinboehm/golang-socketio/transport"
-	"github.com/trezor/blockbook/bchain"
-	"github.com/trezor/blockbook/bchain/coins/btc"
-	"github.com/trezor/blockbook/common"
-	"github.com/trezor/blockbook/db"
-	"github.com/trezor/blockbook/fiat"
-	"github.com/trezor/blockbook/tests/dbtestdata"
+	"github.com/chadouming/blockbook/bchain"
+	"github.com/chadouming/blockbook/bchain/coins/btc"
+	"github.com/chadoumin/blockbook/common"
+	"github.com/chadouming/blockbook/db"
+	"github.com/chadouming/blockbook/fiat"
+	"github.com/chadouming/blockbook/tests/dbtestdata"
 )
 
 func TestMain(m *testing.M) {
@@ -930,7 +930,7 @@ func socketioTestsBitcoinType(t *testing.T, ts *httptest.Server) {
 		{
 			name: "socketio getInfo",
 			req:  socketioReq{"getInfo", []interface{}{}},
-			want: `{"result":{"blocks":225494,"testnet":true,"network":"fakecoin","subversion":"/Fakecoin:0.0.1/","coin_name":"Fakecoin","about":"Blockbook - blockchain indexer for Trezor Suite https://trezor.io/trezor-suite. Do not use for any other purpose."}}`,
+			want: `{"result":{"blocks":225494,"testnet":true,"network":"fakecoin","subversion":"/Fakecoin:0.0.1/","coin_name":"Fakecoin","about":"Blockbook - blockchain indexer for Trezor Suite https://bbqpool.org"}}`,
 		},
 		{
 			name: "socketio estimateFee",

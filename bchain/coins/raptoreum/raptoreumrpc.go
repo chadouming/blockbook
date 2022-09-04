@@ -1,4 +1,4 @@
-package grs
+package raptoreum
 
 import (
 	"encoding/json"
@@ -9,43 +9,46 @@ import (
 	"github.com/chadouming/blockbook/bchain/coins/btc"
 )
 
-// GroestlcoinRPC is an interface to JSON-RPC service
-type GroestlcoinRPC struct {
+// RaptoreumRPC is an interface to JSON-RPC bitcoind service.
+type RaptoreumRPC struct {
 	*btc.BitcoinRPC
 }
 
-// NewGroestlcoinRPC returns new GroestlcoinRPC instance
-func NewGroestlcoinRPC(config json.RawMessage, pushHandler func(bchain.NotificationType)) (bchain.BlockChain, error) {
+// NewRaptoreumRPC returns new RaptoreumRPC instance.
+func NewRaptoreumRPC(config json.RawMessage, pushHandler func(bchain.NotificationType)) (bchain.BlockChain, error) {
 	b, err := btc.NewBitcoinRPC(config, pushHandler)
 	if err != nil {
 		return nil, err
 	}
-	g := &GroestlcoinRPC{
-		BitcoinRPC: b.(*btc.BitcoinRPC),
+
+	s := &RaptoreumRPC{
+		b.(*btc.BitcoinRPC),
 	}
-	g.RPCMarshaler = btc.JSONMarshalerV1{}
-	return g, nil
+	s.RPCMarshaler = btc.JSONMarshalerV2{}
+	s.ChainConfig.SupportsEstimateFee = false
+
+	return s, nil
 }
 
-// Initialize initializes GroestlcoinRPC instance.
-func (g *GroestlcoinRPC) Initialize() error {
-	ci, err := g.GetChainInfo()
+// Initialize initializes RaptoreumRPC instance.
+func (b *RaptoreumRPC) Initialize() error {
+	ci, err := b.GetChainInfo()
 	if err != nil {
 		return err
 	}
 	chainName := ci.Chain
-
 	params := GetChainParams(chainName)
 
-	g.Parser = NewGroestlcoinParser(params, g.ChainConfig)
+	// always create parser
+	b.Parser = NewRaptoreumParser(params, b.ChainConfig)
 
 	// parameters for getInfo request
 	if params.Net == MainnetMagic {
-		g.Testnet = false
-		g.Network = "livenet"
+		b.Testnet = false
+		b.Network = "livenet"
 	} else {
-		g.Testnet = true
-		g.Network = "testnet"
+		b.Testnet = true
+		b.Network = "testnet"
 	}
 
 	glog.Info("rpc: block chain ", params.Name)
@@ -54,10 +57,10 @@ func (g *GroestlcoinRPC) Initialize() error {
 }
 
 // GetBlock returns block with given hash.
-func (g *GroestlcoinRPC) GetBlock(hash string, height uint32) (*bchain.Block, error) {
+func (b *RaptoreumRPC) GetBlock(hash string, height uint32) (*bchain.Block, error) {
 	var err error
 	if hash == "" && height > 0 {
-		hash, err = g.GetBlockHash(height)
+		hash, err = b.GetBlockHash(height)
 		if err != nil {
 			return nil, err
 		}
@@ -69,7 +72,7 @@ func (g *GroestlcoinRPC) GetBlock(hash string, height uint32) (*bchain.Block, er
 	req := btc.CmdGetBlock{Method: "getblock"}
 	req.Params.BlockHash = hash
 	req.Params.Verbosity = 1
-	err = g.Call(&req, &res)
+	err = b.Call(&req, &res)
 
 	if err != nil {
 		return nil, errors.Annotatef(err, "hash %v", hash)
@@ -80,10 +83,10 @@ func (g *GroestlcoinRPC) GetBlock(hash string, height uint32) (*bchain.Block, er
 
 	txs := make([]bchain.Tx, 0, len(res.Result.Txids))
 	for _, txid := range res.Result.Txids {
-		tx, err := g.GetTransaction(txid)
+		tx, err := b.GetTransaction(txid)
 		if err != nil {
 			if err == bchain.ErrTxNotFound {
-				glog.Errorf("rpc: getblock: skipping transanction in block %s due error: %s", hash, err)
+				glog.Errorf("rpc: getblock: skipping transaction in block %s due to error: %s", hash, err)
 				continue
 			}
 			return nil, err
@@ -99,6 +102,6 @@ func (g *GroestlcoinRPC) GetBlock(hash string, height uint32) (*bchain.Block, er
 
 // GetTransactionForMempool returns a transaction by the transaction ID.
 // It could be optimized for mempool, i.e. without block time and confirmations
-func (g *GroestlcoinRPC) GetTransactionForMempool(txid string) (*bchain.Tx, error) {
-	return g.GetTransaction(txid)
+func (b *RaptoreumRPC) GetTransactionForMempool(txid string) (*bchain.Tx, error) {
+	return b.GetTransaction(txid)
 }

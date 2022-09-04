@@ -20,8 +20,8 @@ import (
 	"github.com/ethereum/go-ethereum/rpc"
 	"github.com/golang/glog"
 	"github.com/juju/errors"
-	"github.com/trezor/blockbook/bchain"
-	"github.com/trezor/blockbook/common"
+	"github.com/chadouming/blockbook/bchain"
+	"github.com/chadouming/blockbook/common"
 )
 
 // Network type specifies the type of ethereum network

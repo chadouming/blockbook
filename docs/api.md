@@ -56,7 +56,7 @@ Response:
     "mempoolSize": 17348,
     "decimals": 8,
     "dbSize": 191887866502,
-    "about": "Blockbook - blockchain indexer for Trezor wallet https://trezor.io/. Do not use for any other purpose."
+    "about": "Blockbook - blockchain indexer for Trezor wallet https://chadouming.io/. Do not use for any other purpose."
   },
   "backend": {
     "chain": "main",
@@ -460,7 +460,7 @@ Blockbook supports BIP44, BIP49, BIP84 and BIP86 (Taproot) derivation schemes, u
 - Xpubs
 
   Blockbook expects xpub at level 3 derivation path, i.e. _m/purpose'/coin_type'/account'/_. Blockbook completes the _change/address_index_ part of the path when deriving addresses.
-  The BIP version is determined by the prefix of the xpub. The prefixes for each coin are defined by fields `xpub_magic`, `xpub_magic_segwit_p2sh`, `xpub_magic_segwit_native` in the [trezor-common](https://github.com/trezor/trezor-common/tree/master/defs/bitcoin) library. If the prefix is not recognized, Blockbook defaults to BIP44 derivation scheme.
+  The BIP version is determined by the prefix of the xpub. The prefixes for each coin are defined by fields `xpub_magic`, `xpub_magic_segwit_p2sh`, `xpub_magic_segwit_native` in the [trezor-common](https://github.com/chadouming/trezor-common/tree/master/defs/bitcoin) library. If the prefix is not recognized, Blockbook defaults to BIP44 derivation scheme.
 
 - Output descriptors
 

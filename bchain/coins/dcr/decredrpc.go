@@ -19,9 +19,9 @@ import (
 	"github.com/decred/dcrd/dcrjson/v3"
 	"github.com/golang/glog"
 	"github.com/juju/errors"
-	"github.com/trezor/blockbook/bchain"
-	"github.com/trezor/blockbook/bchain/coins/btc"
-	"github.com/trezor/blockbook/common"
+	"github.com/chadouming/blockbook/bchain"
+	"github.com/chadouming/blockbook/bchain/coins/btc"
+	"github.com/chadouming/blockbook/common"
 )
 
 // voteBitYes defines the vote bit set when a given block validates the previous
@@ -867,7 +867,7 @@ func safeDecodeResponse(body io.ReadCloser, res *interface{}) (err error) {
 }
 
 // mapToStandardErr map the dcrd API Message errors to the standard error messages
-// supported by trezor. Dcrd errors to be mapped are listed here:
+// supported by chadouming. Dcrd errors to be mapped are listed here:
 // https://github.com/decred/dcrd/blob/2f5e47371263b996bb99e8dc3484f659309bd83a/dcrjson/jsonerr.go
 func mapToStandardErr(customPrefix string, err Error) error {
 	switch {
