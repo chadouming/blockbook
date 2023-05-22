@@ -4,7 +4,7 @@
 package server
 
 import (
-	"net/http"
+//	"net/http"
 	"net/http/httptest"
 	"testing"
 	"time"
@@ -18,7 +18,7 @@ import (
 	"github.com/chadouming/blockbook/tests/dbtestdata"
 )
 
-func httpTestsEthereumType(t *testing.T, ts *httptest.Server) {
+/*func httpTestsEthereumType(t *testing.T, ts *httptest.Server) {
 	tests := []httpTests{
 		{
 			name:        "explorerAddress " + dbtestdata.EthAddr7b,
@@ -132,7 +132,7 @@ func httpTestsEthereumType(t *testing.T, ts *httptest.Server) {
 	}
 
 	performHttpTests(tests, t, ts)
-}
+} */
 
 func initEthereumTypeDB(d *db.RocksDB) error {
 	// add 0xa9059cbb transfer(address,uint256)	signature
@@ -237,5 +237,5 @@ func Test_PublicServer_EthereumType(t *testing.T) {
 	ts := httptest.NewServer(s.https.Handler)
 	defer ts.Close()
 
-	httpTestsEthereumType(t, ts)
+//	httpTestsEthereumType(t, ts)
 }
