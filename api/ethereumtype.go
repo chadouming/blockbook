@@ -5,8 +5,8 @@ import (
 
 	"github.com/golang/glog"
 	"github.com/linxGnu/grocksdb"
-	"github.com/trezor/blockbook/bchain"
-	"github.com/trezor/blockbook/db"
+	"github.com/chadouming/blockbook/bchain"
+	"github.com/chadouming/blockbook/db"
 )
 
 // refetch internal data

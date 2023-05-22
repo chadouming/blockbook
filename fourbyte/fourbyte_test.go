@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/trezor/blockbook/bchain"
+	"github.com/chadouming/blockbook/bchain"
 )
 
 func Test_parseSignatureFromText(t *testing.T) {
